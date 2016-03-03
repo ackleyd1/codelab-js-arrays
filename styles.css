@@ -1,0 +1,19 @@
+@font-face {
+    font-family: GameCube;
+    src: url("GameCube.ttf");
+}
+body {
+    font-family: GameCube;
+    text-align: center;
+    background-color: #663399;
+}
+input {
+    display: block;
+    margin: 0 auto;
+}
+input:focus {
+    outline-color: #663399;
+}
+ol {
+    text-align: left;
+}
