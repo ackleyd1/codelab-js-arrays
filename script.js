@@ -9,10 +9,22 @@ gameNumber.innerHTML = 'Number of games to play: 0'
 
 function renderGames() {
     gamesList.innerHTML = games.map(function(game, index) {
-        return '<li>' + game + '<button class="clear" data-index="' + index +
-        '">X</button>' + '<button class="up" data-index="' + index +
-        '">↑</button>' + '<button class="down" data-index="' + index +
-        '">↓</button>' + '</li>'
+        if (parseInt(index) === 0) {
+            return '<li>' + game + '<button class="clear" data-index="' + index +
+            '">X</button>' + '<button class="down" data-index="' + index +
+            '">↓</button>' + '</li>'
+        }
+        else if (parseInt(index) === games.length - 1) {
+            return '<li>' + game + '<button class="clear" data-index="' + index +
+            '">X</button>' + '<button class="up" data-index="' + index +
+            '">↑</button>' + '</li>'
+        }
+        else {
+            return '<li>' + game + '<button class="clear" data-index="' + index +
+            '">X</button>' + '<button class="up" data-index="' + index +
+            '">↑</button>' + '<button class="down" data-index="' + index +
+            '">↓</button>' + '</li>'
+        }
     }).join('')
     gameNumber.innerHTML = 'Number of games to play: ' + games.length.toString()
 }
@@ -23,23 +35,17 @@ gamesList.onclick = function(event) {
         renderGames()
     }
     else if (clickedElement.className === 'up') {
-        // Check to make sure it isn't first otherwise it can't move up
         // index returns a string so to perform a subtraction we need to convert to int
-        if (clickedElement.dataset.index > 0) {
-            var tempGame = games[parseInt(clickedElement.dataset.index) - 1]
-            games[parseInt(clickedElement.dataset.index) - 1] = games[parseInt(clickedElement.dataset.index)]
-            games[parseInt(clickedElement.dataset.index)] = tempGame
-            renderGames()
-        }
+        var tempGame = games[parseInt(clickedElement.dataset.index) - 1]
+        games[parseInt(clickedElement.dataset.index) - 1] = games[parseInt(clickedElement.dataset.index)]
+        games[parseInt(clickedElement.dataset.index)] = tempGame
+        renderGames()
     }
     else if (clickedElement.className === 'down') {
-        // Check to make sure it isn't last otherwise it can't move down
-        if (clickedElement.dataset.index < games.length - 1) {
-            var tempGame = games[parseInt(clickedElement.dataset.index) + 1]
-            games[parseInt(clickedElement.dataset.index) + 1] = games[parseInt(clickedElement.dataset.index)]
-            games[parseInt(clickedElement.dataset.index)] = tempGame
-            renderGames()
-        }
+        var tempGame = games[parseInt(clickedElement.dataset.index) + 1]
+        games[parseInt(clickedElement.dataset.index) + 1] = games[parseInt(clickedElement.dataset.index)]
+        games[parseInt(clickedElement.dataset.index)] = tempGame
+        renderGames()
     }
 }
 clearAll.onclick = function() {
@@ -53,8 +59,14 @@ randomGame.onclick = function() {
 }
 newGameInput.onkeypress = function(event) {
     if (event.which === 13) {
-        games.push(this.value)
-        this.value = ''
-        renderGames()
+        if (this.value.trim() === '') {
+            // Do nothing
+        }
+        else {
+            games.push(this.value)
+            this.value = ''
+            renderGames()
+        }
+
     }
 }
