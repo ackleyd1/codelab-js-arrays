@@ -3,20 +3,24 @@ var clearAll = document.getElementById('clear')
 var randomGame = document.getElementById('random')
 var newGameInput = document.getElementById('input')
 var gamesList = document.getElementById('games')
+var gameNumber = document.getElementById('gameNumber')
+// Displaying number of games to play before renderTodos is called
+gameNumber.innerHTML = 'Number of games to play: 0'
 
-function renderTodos() {
+function renderGames() {
     gamesList.innerHTML = games.map(function(game, index) {
         return '<li>' + game + '<button class="clear" data-index="' + index +
         '">X</button>' + '<button class="up" data-index="' + index +
         '">↑</button>' + '<button class="down" data-index="' + index +
         '">↓</button>' + '</li>'
     }).join('')
+    gameNumber.innerHTML = 'Number of games to play: ' + games.length.toString()
 }
 gamesList.onclick = function(event) {
     var clickedElement = event.target
     if (clickedElement.className === 'clear') {
         games.splice(clickedElement.dataset.index, 1)
-        renderTodos()
+        renderGames()
     }
     else if (clickedElement.className === 'up') {
         // Check to make sure it isn't first otherwise it can't move up
@@ -25,7 +29,7 @@ gamesList.onclick = function(event) {
             var tempGame = games[parseInt(clickedElement.dataset.index) - 1]
             games[parseInt(clickedElement.dataset.index) - 1] = games[parseInt(clickedElement.dataset.index)]
             games[parseInt(clickedElement.dataset.index)] = tempGame
-            renderTodos()
+            renderGames()
         }
     }
     else if (clickedElement.className === 'down') {
@@ -34,13 +38,13 @@ gamesList.onclick = function(event) {
             var tempGame = games[parseInt(clickedElement.dataset.index) + 1]
             games[parseInt(clickedElement.dataset.index) + 1] = games[parseInt(clickedElement.dataset.index)]
             games[parseInt(clickedElement.dataset.index)] = tempGame
-            renderTodos()
+            renderGames()
         }
     }
 }
 clearAll.onclick = function() {
     games = []
-    renderTodos()
+    renderGames()
 
 }
 randomGame.onclick = function() {
@@ -51,6 +55,6 @@ newGameInput.onkeypress = function(event) {
     if (event.which === 13) {
         games.push(this.value)
         this.value = ''
-        renderTodos()
+        renderGames()
     }
 }
