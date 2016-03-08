@@ -11,17 +11,17 @@ function renderGames() {
     console.log(games)
     gamesList.innerHTML = games.map(function(game, index) {
         if (parseInt(index) === 0) {
-            return '<li><p class="game">' + game + '</p><button class="clear" data-index="' + index +
+            return '<li><span class="game">' + game + '</span><button class="clear" data-index="' + index +
             '">X</button>' + '<button class="down" data-index="' + index +
             '">↓</button>' + '</li>'
         }
         else if (parseInt(index) === games.length - 1) {
-            return '<li><p class="game">' + game + '</p><button class="clear" data-index="' + index +
+            return '<li><span class="game">' + game + '</span><button class="clear" data-index="' + index +
             '">X</button>' + '<button class="up" data-index="' + index +
             '">↑</button>' + '</li>'
         }
         else {
-            return '<li><p class="game">' + game + '</p><button class="clear" data-index="' + index +
+            return '<li><span class="game">' + game + '</span><button class="clear" data-index="' + index +
             '">X</button>' + '<button class="up" data-index="' + index +
             '">↑</button>' + '<button class="down" data-index="' + index +
             '">↓</button>' + '</li>'
@@ -50,9 +50,11 @@ gamesList.onclick = function(event) {
     }
     else if (clickedElement.className === 'game') {
         var tempGame = clickedElement.innerHTML
-        clickedElement.innerHTML = '<input id="edit" type="text" name="game" placeholder=' + tempGame + '>'
+        clickedElement.innerHTML = '<input id="edit" type="text" name="game" value="' + tempGame + '" onfocus="' + this.value + '">'
         var newGameInput = document.getElementById('edit')
+        newGameInput.focus()
         newGameInput.onkeypress = function(event) {
+            console.log(event.which)
             if (event.which === 13) {
                 if (this.value.trim() === '') {
                     //Do nothing
@@ -60,7 +62,11 @@ gamesList.onclick = function(event) {
                 else {
                     games.splice(games.indexOf(tempGame), 1, this.value)
                     renderGames()
+
                 }
+            }
+            else if (event.which === 47) {
+                renderGames()
             }
         }
 
