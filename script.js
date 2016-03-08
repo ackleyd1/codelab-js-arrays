@@ -8,19 +8,20 @@ var gameNumber = document.getElementById('gameNumber')
 gameNumber.innerHTML = 'Number of games to play: 0'
 
 function renderGames() {
+    console.log(games)
     gamesList.innerHTML = games.map(function(game, index) {
         if (parseInt(index) === 0) {
-            return '<li>' + game + '<button class="clear" data-index="' + index +
+            return '<li><p class="game">' + game + '</p><button class="clear" data-index="' + index +
             '">X</button>' + '<button class="down" data-index="' + index +
             '">↓</button>' + '</li>'
         }
         else if (parseInt(index) === games.length - 1) {
-            return '<li>' + game + '<button class="clear" data-index="' + index +
+            return '<li><p class="game">' + game + '</p><button class="clear" data-index="' + index +
             '">X</button>' + '<button class="up" data-index="' + index +
             '">↑</button>' + '</li>'
         }
         else {
-            return '<li>' + game + '<button class="clear" data-index="' + index +
+            return '<li><p class="game">' + game + '</p><button class="clear" data-index="' + index +
             '">X</button>' + '<button class="up" data-index="' + index +
             '">↑</button>' + '<button class="down" data-index="' + index +
             '">↓</button>' + '</li>'
@@ -46,6 +47,23 @@ gamesList.onclick = function(event) {
         games[parseInt(clickedElement.dataset.index) + 1] = games[parseInt(clickedElement.dataset.index)]
         games[parseInt(clickedElement.dataset.index)] = tempGame
         renderGames()
+    }
+    else if (clickedElement.className === 'game') {
+        var tempGame = clickedElement.innerHTML
+        clickedElement.innerHTML = '<input id="edit" type="text" name="game" placeholder=' + tempGame + '>'
+        var newGameInput = document.getElementById('edit')
+        newGameInput.onkeypress = function(event) {
+            if (event.which === 13) {
+                if (this.value.trim() === '') {
+                    //Do nothing
+                }
+                else {
+                    games.splice(games.indexOf(tempGame), 1, this.value)
+                    renderGames()
+                }
+            }
+        }
+
     }
 }
 clearAll.onclick = function() {

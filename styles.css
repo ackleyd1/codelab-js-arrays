@@ -7,7 +7,7 @@ body {
     text-align: center;
     background-color: #663399;
 }
-input {
+input.game {
     display: block;
     margin: 0 auto;
 }
@@ -16,4 +16,10 @@ input:focus {
 }
 ol {
     text-align: left;
+}
+li p {
+    display: inline;
+}
+input.edit {
+    display: inline;
 }
