@@ -8,7 +8,6 @@ var gameNumber = document.getElementById('gameNumber')
 gameNumber.innerHTML = 'Number of games to play: 0'
 
 function renderGames() {
-    console.log(games)
     gamesList.innerHTML = games.map(function(game, index) {
         if (parseInt(index) === 0) {
             return '<li><span class="game">' + game + '</span><button class="clear" data-index="' + index +
@@ -54,7 +53,6 @@ gamesList.onclick = function(event) {
         var newGameInput = document.getElementById('edit')
         newGameInput.focus()
         newGameInput.onkeypress = function(event) {
-            console.log(event.which)
             if (event.which === 13) {
                 if (this.value.trim() === '') {
                     //Do nothing
@@ -78,8 +76,13 @@ clearAll.onclick = function() {
 
 }
 randomGame.onclick = function() {
-    var max = games.length - 1
-    alert("You should play " + games[parseInt((Math.random() * (max + 1)), 10)])
+    if (games.length > 1) {
+        var max = games.length - 1
+        alert("You should play " + games[parseInt((Math.random() * (max + 1)), 10)])
+    }
+    else {
+        alert("You need to enter more games")
+    }
 }
 newGameInput.onkeypress = function(event) {
     if (event.which === 13) {

@@ -17,9 +17,3 @@ input:focus {
 ol {
     text-align: left;
 }
-li p {
-    display: inline;
-}
-input.edit {
-    display: inline;
-}
