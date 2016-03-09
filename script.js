@@ -64,7 +64,7 @@ gamesList.onclick = function(event) {
 
                 }
             }
-            else if (event.which === 47) {
+            else if (event.which === 27) {
                 renderGames()
             }
         }
