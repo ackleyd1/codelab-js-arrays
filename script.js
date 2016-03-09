@@ -49,9 +49,10 @@ gamesList.onclick = function(event) {
     }
     else if (clickedElement.className === 'game') {
         var tempGame = clickedElement.innerHTML
-        clickedElement.innerHTML = '<input id="edit" type="text" name="game" value="' + tempGame + '" onfocus="' + this.value + '">'
+        clickedElement.innerHTML = '<input id="edit" type="text" name="game" value="' + tempGame + '">'
         var newGameInput = document.getElementById('edit')
         newGameInput.focus()
+        newGameInput.select()
         newGameInput.onkeypress = function(event) {
             if (event.which === 13) {
                 if (this.value.trim() === '') {
