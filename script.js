@@ -6,6 +6,8 @@ var gamesList = document.getElementById('games')
 var gameNumber = document.getElementById('gameNumber')
 // Displaying number of games to play before renderTodos is called
 gameNumber.innerHTML = 'Number of games to play: 0'
+randomGame.style.display = "none"
+clearAll.style.display = "none"
 
 function renderGames() {
     gamesList.innerHTML = games.map(function(game, index) {
@@ -27,6 +29,18 @@ function renderGames() {
         }
     }).join('')
     gameNumber.innerHTML = 'Number of games to play: ' + games.length.toString()
+    if (games.length > 1){
+        randomGame.style.display = "inline"
+    }
+    else if (games.length < 2) {
+        randomGame.style.display = "none"
+    }
+    if (games.length > 0) {
+        clearAll.style.display = "inline"
+    }
+    else {
+        clearAll.style.display = "none"
+    }
 }
 gamesList.onclick = function(event) {
     var clickedElement = event.target
@@ -53,8 +67,9 @@ gamesList.onclick = function(event) {
         var newGameInput = document.getElementById('edit')
         newGameInput.focus()
         newGameInput.select()
-        newGameInput.onkeypress = function(event) {
-            if (event.which === 13) {
+        newGameInput.onkeyup = function(event) {
+            console.log(event.keyCode)
+            if (event.keyCode === 13) {
                 if (this.value.trim() === '') {
                     //Do nothing
                 }
@@ -64,7 +79,7 @@ gamesList.onclick = function(event) {
 
                 }
             }
-            else if (event.which === 27) {
+            else if (event.keyCode === 27) {
                 renderGames()
             }
         }
@@ -77,13 +92,8 @@ clearAll.onclick = function() {
 
 }
 randomGame.onclick = function() {
-    if (games.length > 1) {
         var max = games.length - 1
         alert("You should play " + games[parseInt((Math.random() * (max + 1)), 10)])
-    }
-    else {
-        alert("You need to enter more games")
-    }
 }
 newGameInput.onkeypress = function(event) {
     if (event.which === 13) {
